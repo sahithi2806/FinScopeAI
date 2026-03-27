@@ -95,9 +95,9 @@ Enter stock symbol: TCS.NS (Sample input)
 
 
 ## Project Status
-✔ Version 1 — Data fetching & visualization
-✔ Version 2 — Analysis (trend, volatility, insights)
-✔ Version 3 — News integration + explanation
+* ✔ Version 1 — Data fetching & visualization
+* ✔ Version 2 — Analysis (trend, volatility, insights)
+* ✔ Version 3 — News integration + explanation
 
 ## 👩‍💻 Author
 Sahithi Singh
