@@ -1,7 +1,7 @@
-# FinScope AI
-FinScope AI is an end-to-end financial data analysis and insight generation system designed to help users understand stock market behavior through data-driven techniques.
+# FinScope
+FinScope is an end-to-end financial data analysis and insight generation system designed to help users understand stock market behavior through data-driven techniques.
 
-The platform integrates real-time market data, statistical analysis, and contextual news to provide a comprehensive view of stock performance. Instead of merely displaying price trends, FinScope AI interprets market movements by combining quantitative indicators such as moving averages, volatility, and percentage change with qualitative signals from financial news.
+The platform integrates real-time market data, statistical analysis, and contextual news to provide a comprehensive view of stock performance. Instead of merely displaying price trends, FinScope interprets market movements by combining quantitative indicators such as moving averages, volatility, and percentage change with qualitative signals from financial news.
 
 The system follows a layered architecture:
 
@@ -21,7 +21,7 @@ Most beginner investors struggle to interpret stock market data due to:
 * Difficulty connecting numerical data with real-world events
 * Over-reliance on raw charts without contextual understanding
 
-FinScope AI addresses this gap by providing an integrated system that not only analyzes stock data but also explains *why* certain trends may be occurring using relevant news and indicators.
+FinScope addresses this gap by providing an integrated system that not only analyzes stock data but also explains *why* certain trends may be occurring using relevant news and indicators.
 
 ## Key Highlights
 
