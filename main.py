@@ -37,34 +37,32 @@ else:
         movement = "decreased "
     
     #volatility-how unstable stock is
-    volatility = hist["Close"].std()
-    if volatility > 50:
-        risk = "High Risk "
-    elif volatility > 20:
-        risk = "Moderate Risk"
+    volatility = hist["Close"].pct_change().std() * 100
+    if volatility > 3:
+        risk ="High Risk"
+    elif volatility > 1:
+        risk ="Moderate Risk"
     else:
-        risk = "Low Risk"
-
+        risk ="Low Risk"
     print(f"Volatility: {volatility:.2f} ({risk})")
 
     hist["MA"] = hist["Close"].rolling(window=5).mean()
     recent_ma = hist["MA"].iloc[-5:]
-    if recent_ma.is_monotonic_increasing:
-        trend = "Strong Uptrend "
-    elif recent_ma.is_monotonic_decreasing:
-        trend = "Strong Downtrend "
+    if hist["MA"].iloc[-1] >hist["MA"].iloc[-5]:
+        trend = "Uptrend"
+    elif hist["MA"].iloc[-1] <hist["MA"].iloc[-5]:
+        trend = "Downtrend"
     else:
-        trend = "Sideways Trend "
+        trend = "Sideways"
     print(f"\nInsight: The stock has {movement} over the selected period, showing {trend.lower()} with {risk.lower()}.")
 
     # Fetch news
-    newsapi =NewsApiClient(api_key="api_key")
+    newsapi =NewsApiClient(api_key=api_key)
     company =stock.split('.')[0]
     articles = newsapi.get_everything(
         q=f"{company} stock India OR {company} earnings OR {company} results",
         language='en',sort_by='relevancy',page_size=3)
-    print("\n Latest News:")
-    print("\n📰 Relevant News:")
+    print("\n Relevant News:")
 
     keywords = ["stock", "shares", "earnings", "results", "market", "revenue"]
     for article in articles['articles']:
@@ -77,7 +75,7 @@ else:
         reason = "positive sentiment or strong performance"
     else:
         reason = "negative sentiment or weak performance"
-    print(f"\nAI Explanation: The stock movement may be due to {reason},as reflected in recent news trends.\n")
+    print(f"\n Explanation: The stock movement may be due to {reason},as reflected in recent news trends.\n")
 
 #Ploting Graph
     plt.figure()
