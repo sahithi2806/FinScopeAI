@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from newsapi import NewsApiClient
 from dotenv import load_dotenv
+from textblob import TextBlob
 import os
 load_dotenv()
 api_key = os.getenv("NEWS_API_KEY")
@@ -62,20 +63,48 @@ else:
     articles = newsapi.get_everything(
         q=f"{company} stock India OR {company} earnings OR {company} results",
         language='en',sort_by='relevancy',page_size=3)
-    print("\n Relevant News:")
 
     keywords = ["stock", "shares", "earnings", "results", "market", "revenue"]
+    sentiments = []
+    print("\n Relevant News:")
+
+    seen = set()
     for article in articles['articles']:
-        title = article['title'].lower()
-        if company.lower() in title and any(word in title for word in keywords):
-            print("-", article['title'])
+        title = article['title']
+        title_lower = title.lower().strip()
+
+        # take first 8 words as key
+        key = " ".join(title_lower.split()[:5])
+        if key not in seen:
+            seen.add(key)
+
+            if company.lower() in title_lower or any(word in title_lower for word in keywords):
+                print("-", title)
+
+                blob = TextBlob(title)
+                polarity = blob.sentiment.polarity
+                sentiments.append(polarity)
+    if sentiments:
+        avg_sentiment = sum(sentiments) / len(sentiments)
+    else:
+        avg_sentiment = 0            
+    if avg_sentiment > 0:
+        sentiment_label = "Positive 😊"
+    elif avg_sentiment < 0:
+        sentiment_label = "Negative 😡"
+    else:
+        sentiment_label = "Neutral 😐"
+
+    print(f"\nNews Sentiment: {sentiment_label}")
 
 # Simple AI-style explanation
-    if percent_change > 0:
-        reason = "positive sentiment or strong performance"
+    if avg_sentiment > 0:
+        reason = "positive news sentiment and favorable market signals"
+    elif avg_sentiment < 0:
+        reason = "negative news sentiment and weak performance signals"
     else:
-        reason = "negative sentiment or weak performance"
-    print(f"\n Explanation: The stock movement may be due to {reason},as reflected in recent news trends.\n")
+        reason = "mixed or neutral market signals"
+    print(f"\nAI Explanation: The stock movement may be influenced by {reason}.")
 
 #Ploting Graph
     plt.figure()
